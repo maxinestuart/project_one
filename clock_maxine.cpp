@@ -1,3 +1,9 @@
+/*
+ * Author: Maxine Stuart
+ * Name: Project 1 - clock
+ * Purpose: 12 and 24 hr clock simulator for Chada Tech interview 
+ */
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -19,7 +25,7 @@ std::string twoDigitString(unsigned int n) { // returns numbers as 2-digit strin
     else {
         result = std::to_string(n);
     }
-    
+
     return result;
 }
 
@@ -31,7 +37,7 @@ void mainMenu() {
 }
 
 int main() {
-    cout << twoDigitString(1) << endl;
+    cout << twoDigitString(33) << endl; // FIXME: test output
 
     return 0;
 }
