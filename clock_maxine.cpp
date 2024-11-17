@@ -77,12 +77,17 @@ string formatTime24(unsigned int h, unsigned int m, unsigned int s) { // return 
 
 string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // return 12 hour time as hh:mm:ss AM / PM
     string time12Hr;
-    int hour = h;
+    unsigned int hour = h;
     string period = " A M";
 
-    if (h > 12) {
-        hour = (h % 12);
+    if (h == 0) {
+        hour = 12; // 12 am
+    }
+    else if (h >= 12) {
         period = " P M";
+        if (h > 12) {
+            hour = h - 12;
+        }
     }
     
     time12Hr = twoDigitString(hour) + ":" + twoDigitString(m) + ":" + twoDigitString(s) + period;
