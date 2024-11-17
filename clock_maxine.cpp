@@ -1,6 +1,6 @@
 /*
  * Author: Maxine Stuart
- * Name: Project 1 - clock
+ * Name: Project 1 - Clock
  * Purpose: 12 and 24 hr clock simulator for Chada Tech interview 
  */
 
