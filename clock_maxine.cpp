@@ -150,32 +150,29 @@ void addOneHour() { // FIXME: add 1 hour
     return;
 }
 
-void mainMenu(unsigned int &h, unsigned int &m, unsigned int &s) { // FIXME: repeats getting the user's menu choice and taking the appropriate action until the user chooses 4 for exit
+void mainMenu(unsigned int &h, unsigned int &m, unsigned int &s) { // repeats getting the user's menu choice and taking the appropriate action until the user chooses 4 for exit
     unsigned int choice = 0;
+    unsigned int numStrings;
+    const char **menuItems = getMenuItems(numStrings);
 
     while (choice != 4) {
-        unsigned int numStrings;
-        const char **menuItems = getMenuItems(numStrings);
         printMenu(menuItems, numStrings, 27);
-        choice = getMenuChoice(4);
+        choice = getMenuChoice(4); // pull input 
 
         switch (choice) { // switch cases handle menu choices
             case 1: addOneHour();
+            displayClocks(h, m, s);
             break;
             case 2: addOneMinute();
+            displayClocks(h, m, s);
             break;
             case 3: addOneSecond();
+            displayClocks(h, m, s);
             break;
-            case 4: cout << "Exiting." << endl;
+            case 4: cout << "Exited." << endl;
             break;
             default: cout << "Please select one of the choices shown." << endl;
         }
-
-        if (choice != 4) { // display clock after changes
-            displayClocks(h, m, s);
-        }
-
-
     }
 }
 
@@ -186,7 +183,7 @@ int main() { // FIXME: main logic
 
     clockSetup(h, m, s);
     displayClocks(h, m, s);
-    printMenu(menuItems, numStrings, 27);
+    mainMenu(h, m, s);
 
     return 0;
 }
