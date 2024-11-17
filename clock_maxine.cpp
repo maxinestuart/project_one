@@ -54,32 +54,6 @@ string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // return 
     return time12Hr;
 }
 
-void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print welcome and set initial time from input
-
-    // validate user inputs for hour, minute, and second
-    cout << "Welcome! Please enter the time for initial clock setup." << endl;
-    cout << "Enter hour:" << endl; 
-    while (!(cin >> h) || h < 0 || h > 24) {
-        cout << "Please enter a valid integer between 0 and 24:" << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    cout << "Enter minute:" << endl; 
-    while (!(cin >> m) || m < 0 || m > 59) {
-        cout << "Please enter a valid integer between 0 and 59:" << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    cout << "Enter second:" << endl; 
-    while (!(cin >> s) || s < 0 || s > 59) {
-        cout << "Please enter a valid integer between 0 and 59:" << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    cout << endl;
-}
-
 // second getter + setter
 void setSecond(unsigned int s) {
     second = s;
@@ -106,6 +80,37 @@ void setHour(unsigned int h) {
 unsigned int getHour() {
     return hour;
 }
+
+void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print welcome and set initial time from input
+
+    // validate user inputs for hour, minute, and second
+    cout << "Welcome! Please enter the time for initial clock setup." << endl;
+    cout << "Enter hour:" << endl; 
+    while (!(cin >> h) || h < 0 || h > 23) {
+        cout << "Please enter a valid integer between 0 and 24:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    cout << "Enter minute:" << endl; 
+    while (!(cin >> m) || m < 0 || m > 59) {
+        cout << "Please enter a valid integer between 0 and 59:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    cout << "Enter second:" << endl; 
+    while (!(cin >> s) || s < 0 || s > 59) {
+        cout << "Please enter a valid integer between 0 and 59:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    setHour(h);
+    setMinute(m);
+    setSecond(s);
+
+    cout << endl;
+}
+
+
 
 const char** getMenuItems(unsigned int &numStrings) { // constant menu items
     static const char *menuItems[] = {"Add One Hour", "Add One Minute", "Add One Second", "Exit Program"};
@@ -151,9 +156,9 @@ void printMenu(const char * strings[], unsigned int numStrings, unsigned char wi
     return;
 }
 
-void displayClocks(unsigned int h, unsigned int m, unsigned int s) { // print both formatted clocks
-    string time12 = formatTime12(h, m, s);
-    string time24 = formatTime24(h, m, s);
+void displayClocks() { // print both formatted clocks
+    string time12 = formatTime12(getHour(), getMinute(), getSecond());
+    string time24 = formatTime24(getHour(), getMinute(), getSecond());
 
     cout << nCharString(27, '*') << nCharString(3, ' ') << nCharString(27, '*') << endl;
     cout << '*' << nCharString(6, ' ') << "12-HOUR CLOCK" << nCharString(6, ' ') << '*' << nCharString(3, ' ');
@@ -208,13 +213,13 @@ void mainMenu(unsigned int &h, unsigned int &m, unsigned int &s) { // repeats ge
 
         switch (choice) { // switch cases handle menu choices
             case 1: addOneHour();
-            displayClocks(h, m, s);
+            displayClocks();
             break;
             case 2: addOneMinute();
-            displayClocks(h, m, s);
+            displayClocks();
             break;
             case 3: addOneSecond();
-            displayClocks(h, m, s);
+            displayClocks();
             break;
             case 4: cout << "Exited." << endl;
             break;
@@ -229,7 +234,7 @@ int main() { // FIXME: main logic
     const char **menuItems = getMenuItems(numStrings);
 
     clockSetup(h, m, s);
-    displayClocks(h, m, s);
+    displayClocks();
     mainMenu(h, m, s);
 
     return 0;
