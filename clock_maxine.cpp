@@ -6,7 +6,37 @@
 
 #include <iostream>
 #include <string>
+#include <limits>
 using namespace std;
+
+void clockSetup() { // print welcome and set initial time from input
+    int hour = 0;
+    int minute = 0;
+    int second = 0;
+
+    // validate inputs for hour, minute, and second
+    cout << "Welcome! Please enter the time for initial clock setup." << endl;
+    cout << "Enter hour:" << endl; 
+    while (!(cin >> hour) || hour < 0 || hour > 24) {
+        cout << "Please enter a valid integer between 0 and 24:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    cout << "Enter minute:" << endl; 
+    while (!(cin >> minute) || minute < 0 || minute > 59) {
+        cout << "Please enter a valid integer between 0 and 59:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    cout << "Enter second:" << endl; 
+    while (!(cin >> second) || second < 0 || second > 59) {
+        cout << "Please enter a valid integer between 0 and 59:" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    cout << hour << minute << second;
+}
 
 unsigned int getMenuChoice(unsigned int maxChoice) { // FIXME: handles correct menu choices
     int menuChoice;
@@ -76,7 +106,9 @@ void mainMenu() { // FIXME: repeats getting the user's choice and taking the app
     return;
 }
 
-int main() {
+int main() { // FIXME: main logic
+    clockSetup();
+
     cout << twoDigitString(33) << endl; // FIXME: test output
 
     return 0;
