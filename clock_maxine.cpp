@@ -53,7 +53,7 @@ string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // return 
 
 void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print welcome and set initial time from input
 
-    // validate inputs for hour, minute, and second
+    // validate user inputs for hour, minute, and second
     cout << "Welcome! Please enter the time for initial clock setup." << endl;
     cout << "Enter hour:" << endl; 
     while (!(cin >> h) || h < 0 || h > 24) {
@@ -77,18 +77,22 @@ void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print we
     cout << endl;
 }
 
-const char** getMenuItems(unsigned int &numStrings) {
+const char** getMenuItems(unsigned int &numStrings) { // constant menu items
     static const char *menuItems[] = {"Add One Hour", "Add One Minute", "Add One Second", "Exit Program"};
     numStrings = 4;
     return menuItems;
 }
 
-unsigned int getMenuChoice(unsigned int maxChoice) { // FIXME: handles correct menu choices
-    int menuChoice;
+unsigned int getMenuChoice(unsigned int maxChoice) { // handles correct menu choices
+    unsigned int menuChoice;
 
-    cin >> menuChoice;
+    // loop for input until in range 1-max
+    while (!(cin >> menuChoice) || menuChoice < 1 || menuChoice > maxChoice) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 
-    return 0;
+    return menuChoice;
 }
 
 string nCharString(size_t n, char c) { // Returns a string of length n, each character a c.
@@ -99,7 +103,7 @@ string nCharString(size_t n, char c) { // Returns a string of length n, each cha
     return widthStars; 
 }
 
-void printMenu(const char * strings[], unsigned int numStrings, unsigned char width) { // FIXME: print formatted menu
+void printMenu(const char * strings[], unsigned int numStrings, unsigned char width) { // print formatted menu options
     cout << nCharString(width, '*') << endl;
     for (unsigned int i = 0; i < numStrings; ++i) {
         cout << "* " << i + 1 << " - " << strings[i];
@@ -146,11 +150,33 @@ void addOneHour() { // FIXME: add 1 hour
     return;
 }
 
-void mainMenu() { // FIXME: repeats getting the user's choice and taking the appropriate action until the user chooses 4 for exit
+void mainMenu(unsigned int &h, unsigned int &m, unsigned int &s) { // FIXME: repeats getting the user's menu choice and taking the appropriate action until the user chooses 4 for exit
+    unsigned int choice = 0;
 
-    getMenuChoice(4);
+    while (choice != 4) {
+        unsigned int numStrings;
+        const char **menuItems = getMenuItems(numStrings);
+        printMenu(menuItems, numStrings, 27);
+        choice = getMenuChoice(4);
 
-    return;
+        switch (choice) { // switch cases handle menu choices
+            case 1: addOneHour();
+            break;
+            case 2: addOneMinute();
+            break;
+            case 3: addOneSecond();
+            break;
+            case 4: cout << "Exiting." << endl;
+            break;
+            default: cout << "Please select one of the choices shown." << endl;
+        }
+
+        if (choice != 4) { // display clock after changes
+            displayClocks(h, m, s);
+        }
+
+
+    }
 }
 
 int main() { // FIXME: main logic
