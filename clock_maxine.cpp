@@ -35,7 +35,7 @@ void clockSetup() { // print welcome and set initial time from input
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    cout << hour << minute << second;
+    cout << hour << minute << second; // FIXME: return/output what? 
 }
 
 unsigned int getMenuChoice(unsigned int maxChoice) { // FIXME: handles correct menu choices
@@ -46,9 +46,12 @@ unsigned int getMenuChoice(unsigned int maxChoice) { // FIXME: handles correct m
     return 0;
 }
 
-string nCharString(size_t n, char c) { // FIXME: Returns a string of length n, each character a c.
+string nCharString(size_t n, char c) { // Returns a string of length n, each character a c.
+    string widthStars;
+    
+    widthStars.append(n, c);
 
-    return "*"; 
+    return widthStars; 
 }
 
 std::string twoDigitString(unsigned int n) { // returns numbers as 2-digit strings
