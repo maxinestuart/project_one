@@ -67,14 +67,27 @@ std::string twoDigitString(unsigned int n) { // returns numbers as 2-digit strin
     return result;
 }
 
-string formatTime24(unsigned int h, unsigned int m, unsigned int s) { // FIXME: return time as hh:mm:ss
+string formatTime24(unsigned int h, unsigned int m, unsigned int s) { // return 24 hour time as hh:mm:ss
+    string time24Hr;
 
-    return "hh:mm:ss";
+    time24Hr = twoDigitString(h) + ":" + twoDigitString(m) + ":" + twoDigitString(s);
+
+    return time24Hr;
 }
 
-string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // FIXME: return time as hh:mm:ss
+string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // return 12 hour time as hh:mm:ss AM / PM
+    string time12Hr;
+    int hour = h;
+    string period = " A M";
 
-    return "12:00:00 A M";
+    if (h > 12) {
+        hour = (h % 12);
+        period = " P M";
+    }
+    
+    time12Hr = twoDigitString(hour) + ":" + twoDigitString(m) + ":" + twoDigitString(s) + period;
+
+    return time12Hr;
 }
 
 void printMenu(char * strings[], unsigned int numStrings, unsigned char width) { // FIXME: print formatted menu
