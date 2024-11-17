@@ -8,7 +8,7 @@
 #include <string>
 #include <limits>
 using namespace std;
-unsigned int second;
+unsigned int second; // global time values
 unsigned int minute;
 unsigned int hour;
 
@@ -103,11 +103,12 @@ void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print we
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
-    setHour(h);
+    setHour(h); // set time by calling functions
     setMinute(m);
     setSecond(s);
 
     cout << endl;
+    return;
 }
 
 
@@ -160,6 +161,8 @@ void displayClocks() { // print both formatted clocks
     string time12 = formatTime12(getHour(), getMinute(), getSecond());
     string time24 = formatTime24(getHour(), getMinute(), getSecond());
 
+    system("clear"); // replace previous screen
+
     cout << nCharString(27, '*') << nCharString(3, ' ') << nCharString(27, '*') << endl;
     cout << '*' << nCharString(6, ' ') << "12-HOUR CLOCK" << nCharString(6, ' ') << '*' << nCharString(3, ' ');
     cout << '*' << nCharString(6, ' ') << "24-HOUR CLOCK" << nCharString(6, ' ') << '*' << endl;
@@ -170,7 +173,7 @@ void displayClocks() { // print both formatted clocks
     return;
 }
 
-void addOneHour() { // FIXME: add 1 hour
+void addOneHour() { // add 1 hour
     if ((getHour() >= 0) && (getHour() <= 22)) {
         setHour(getHour() + 1);
     }
@@ -180,7 +183,7 @@ void addOneHour() { // FIXME: add 1 hour
     return;
 }
 
-void addOneMinute() { // FIXME: add 1 minute
+void addOneMinute() { // add 1 minute and adjust hours if needed
     if ((getMinute() >= 0) && (getMinute() <= 58)) {
         setMinute(getMinute() + 1);
     }
@@ -191,7 +194,7 @@ void addOneMinute() { // FIXME: add 1 minute
     return;
 }
 
-void addOneSecond() { // FIXME: add 1 second
+void addOneSecond() { // add 1 second and adjust minutes if needed
     if ((getSecond() >= 0) && (getSecond() <= 58)) {
         setSecond(getSecond() + 1);
     }
@@ -223,12 +226,13 @@ void mainMenu(unsigned int &h, unsigned int &m, unsigned int &s) { // repeats ge
             break;
             case 4: cout << "Exited." << endl;
             break;
-            default: cout << "Please select one of the choices shown." << endl;
+            default: break;
         }
     }
+    return;
 }
 
-int main() { // FIXME: main logic
+int main() { // main logic
     unsigned int h = 0, m = 0, s = 0;
     unsigned int numStrings;
     const char **menuItems = getMenuItems(numStrings);
