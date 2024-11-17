@@ -51,34 +51,30 @@ string formatTime12(unsigned int h, unsigned int m, unsigned int s) { // return 
     return time12Hr;
 }
 
-void clockSetup() { // print welcome and set initial time from input
-    int hour = 0;
-    int minute = 0;
-    int second = 0;
+void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print welcome and set initial time from input
 
     // validate inputs for hour, minute, and second
     cout << "Welcome! Please enter the time for initial clock setup." << endl;
     cout << "Enter hour:" << endl; 
-    while (!(cin >> hour) || hour < 0 || hour > 24) {
+    while (!(cin >> h) || h < 0 || h > 24) {
         cout << "Please enter a valid integer between 0 and 24:" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     cout << "Enter minute:" << endl; 
-    while (!(cin >> minute) || minute < 0 || minute > 59) {
+    while (!(cin >> m) || m < 0 || m > 59) {
         cout << "Please enter a valid integer between 0 and 59:" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     cout << "Enter second:" << endl; 
-    while (!(cin >> second) || second < 0 || second > 59) {
+    while (!(cin >> s) || s < 0 || s > 59) {
         cout << "Please enter a valid integer between 0 and 59:" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     cout << endl;
-    cout << "You entered: " << formatTime24(hour, minute, second) << endl; // FIXME: return/output what? 
 }
 
 const char** getMenuItems(unsigned int &numStrings) {
@@ -121,8 +117,17 @@ void printMenu(const char * strings[], unsigned int numStrings, unsigned char wi
     return;
 }
 
-void displayClocks(unsigned int h, unsigned int m, unsigned int s) { // FIXME: print clocks
+void displayClocks(unsigned int h, unsigned int m, unsigned int s) { // print both formatted clocks
+    string time12 = formatTime12(h, m, s);
+    string time24 = formatTime24(h, m, s);
 
+    cout << nCharString(27, '*') << nCharString(3, ' ') << nCharString(27, '*') << endl;
+    cout << '*' << nCharString(6, ' ') << "12-HOUR CLOCK" << nCharString(6, ' ') << '*' << nCharString(3, ' ');
+    cout << '*' << nCharString(6, ' ') << "24-HOUR CLOCK" << nCharString(6, ' ') << '*' << endl;
+    cout << endl;
+    cout << '*' << nCharString(6, ' ') << time12 << nCharString(7, ' ') << '*' << nCharString(3, ' ');
+    cout << '*' << nCharString(8, ' ') << time24 << nCharString(9, ' ') << '*' << endl;
+    cout << nCharString(27, '*') << nCharString(3, ' ') << nCharString(27, '*') << endl;
     return;
 }
 
@@ -149,13 +154,13 @@ void mainMenu() { // FIXME: repeats getting the user's choice and taking the app
 }
 
 int main() { // FIXME: main logic
+    unsigned int h = 0, m = 0, s = 0;
     unsigned int numStrings;
     const char **menuItems = getMenuItems(numStrings);
 
-    clockSetup();
+    clockSetup(h, m, s);
+    displayClocks(h, m, s);
     printMenu(menuItems, numStrings, 27);
-
-    cout << twoDigitString(33) << endl; // FIXME: test output
 
     return 0;
 }
