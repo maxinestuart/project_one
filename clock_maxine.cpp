@@ -8,6 +8,9 @@
 #include <string>
 #include <limits>
 using namespace std;
+unsigned int second;
+unsigned int minute;
+unsigned int hour;
 
 
 std::string twoDigitString(unsigned int n) { // returns numbers as 2-digit strings
@@ -77,6 +80,33 @@ void clockSetup(unsigned int &h, unsigned int &m, unsigned int &s) { // print we
     cout << endl;
 }
 
+// second getter + setter
+void setSecond(unsigned int s) {
+    second = s;
+}
+
+unsigned int getSecond() {
+    return second;
+}
+
+// minute getter + setter
+void setMinute(unsigned int m) {
+    minute = m;
+}
+
+unsigned int getMinute() {
+    return minute;
+}
+
+// hour getter + setter
+void setHour(unsigned int h) {
+    hour = h;
+}
+
+unsigned int getHour() {
+    return hour;
+}
+
 const char** getMenuItems(unsigned int &numStrings) { // constant menu items
     static const char *menuItems[] = {"Add One Hour", "Add One Minute", "Add One Second", "Exit Program"};
     numStrings = 4;
@@ -135,18 +165,35 @@ void displayClocks(unsigned int h, unsigned int m, unsigned int s) { // print bo
     return;
 }
 
-void addOneSecond() { // FIXME: add 1 second
-
+void addOneHour() { // FIXME: add 1 hour
+    if ((getHour() >= 0) && (getHour() <= 22)) {
+        setHour(getHour() + 1);
+    }
+    else if (getHour() == 23) {
+        setHour(0);
+    }
     return;
 }
 
 void addOneMinute() { // FIXME: add 1 minute
-
+    if ((getMinute() >= 0) && (getMinute() <= 58)) {
+        setMinute(getMinute() + 1);
+    }
+    else if (getMinute() == 59) {
+        setMinute(0);
+        addOneHour();
+    }
     return;
 }
 
-void addOneHour() { // FIXME: add 1 hour
-
+void addOneSecond() { // FIXME: add 1 second
+    if ((getSecond() >= 0) && (getSecond() <= 58)) {
+        setSecond(getSecond() + 1);
+    }
+    else if (getSecond() == 59) {
+        setSecond(0);
+        addOneMinute();
+    }
     return;
 }
 
